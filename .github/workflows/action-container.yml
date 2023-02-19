@@ -12,6 +12,10 @@ on:
       - 'custom_components/**'
       - 'action/**'
 
+concurrency:
+  group: container-build-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build
@@ -40,7 +44,7 @@ jobs:
             type=sha
 
       - name: Build and push
-        uses: docker/build-push-action@v3.2.0
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./action
           push: true
